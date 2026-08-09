@@ -1,6 +1,9 @@
+import Navbar from "./components/Navbar";
 export default function Home() {
   return (
     <main className="min-h-screen bg-[#0B1120] text-white">
+      <Navbar />
+      
       <section className="flex min-h-screen flex-col items-center justify-center px-6 text-center">
         <p className="mb-4 text-blue-400 font-semibold tracking-widest uppercase">
           Welcome to My Portfolio
