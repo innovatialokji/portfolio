@@ -1,95 +1,80 @@
 "use client";
 
 import { useState } from "react";
-import { AnimatePresence, motion } from "framer-motion";
-import { FiMenu, FiX } from "react-icons/fi";
-
-const navLinks = [
-  { name: "Home", href: "#home" },
-  { name: "About", href: "#about" },
-  { name: "Experience", href: "#experience" },
-  { name: "Projects", href: "#projects" },
-  { name: "Research", href: "#research" },
-  { name: "Contact", href: "#contact" },
-];
 
 export default function Navbar() {
-  const [isOpen, setIsOpen] = useState(false);
+  const [menuOpen, setMenuOpen] = useState(false);
+
+  const navItems = [
+    { name: "About", href: "#about" },
+    { name: "Experience", href: "#experience" },
+    { name: "Projects", href: "#projects" },
+    { name: "Research", href: "#research" },
+    { name: "Contact", href: "#contact" },
+  ];
 
   return (
-    <header className="fixed top-0 left-0 z-50 w-full px-4 pt-4 sm:px-6">
-      <nav className="mx-auto flex max-w-7xl items-center justify-between rounded-2xl border border-white/10 bg-slate-950/70 px-5 py-3 shadow-2xl backdrop-blur-xl sm:px-6">
-        
-        {/* Logo */}
-        <a
-          href="#home"
-          className="text-lg font-bold tracking-tight text-white sm:text-xl"
-        >
-          Alok<span className="text-blue-400">.dev</span>
-        </a>
+    <header className="fixed top-0 left-0 right-0 z-50 px-4 pt-4">
+      <nav className="mx-auto max-w-6xl rounded-2xl border border-white/10 bg-[#0B1120]/75 px-5 py-3 shadow-2xl backdrop-blur-xl">
+        <div className="flex items-center justify-between">
 
-        {/* Desktop Menu */}
-        <div className="hidden items-center gap-7 lg:flex">
-          {navLinks.map((link) => (
-            <a
-              key={link.name}
-              href={link.href}
-              className="text-sm font-medium text-slate-300 transition hover:text-white"
-            >
-              {link.name}
-            </a>
-          ))}
+          {/* Logo */}
+          <a
+            href="#top"
+            className="text-xl font-bold tracking-tight text-white"
+          >
+            Alok<span className="text-blue-500">.</span>
+          </a>
+
+          {/* Desktop Navigation */}
+          <div className="hidden items-center gap-8 md:flex">
+            {navItems.map((item) => (
+              <a
+                key={item.name}
+                href={item.href}
+                className="text-sm font-medium text-gray-300 transition hover:text-blue-400"
+              >
+                {item.name}
+              </a>
+            ))}
+          </div>
+
+          {/* Resume Button */}
+          <a
+            href="#contact"
+            className="hidden rounded-xl bg-blue-600 px-5 py-2.5 text-sm font-semibold text-white transition hover:bg-blue-500 md:block"
+          >
+            Let's Connect
+          </a>
+
+          {/* Mobile Menu Button */}
+          <button
+            onClick={() => setMenuOpen(!menuOpen)}
+            className="rounded-lg border border-white/10 px-3 py-2 text-gray-300 md:hidden"
+            aria-label="Toggle navigation menu"
+          >
+            {menuOpen ? "✕" : "☰"}
+          </button>
         </div>
 
-        {/* Resume Button */}
-        <a
-          href="/resume.pdf"
-          className="hidden rounded-xl bg-blue-500 px-4 py-2 text-sm font-semibold text-white transition hover:scale-105 hover:bg-blue-400 md:block"
-        >
-          Resume
-        </a>
-
-        {/* Mobile Menu Button */}
-        <button
-          onClick={() => setIsOpen(!isOpen)}
-          className="text-2xl text-white lg:hidden"
-          aria-label="Toggle menu"
-        >
-          {isOpen ? <FiX /> : <FiMenu />}
-        </button>
-      </nav>
-
-      {/* Mobile Menu */}
-      <AnimatePresence>
-        {isOpen && (
-          <motion.div
-            initial={{ opacity: 0, y: -15 }}
-            animate={{ opacity: 1, y: 0 }}
-            exit={{ opacity: 0, y: -15 }}
-            className="mx-auto mt-2 max-w-7xl rounded-2xl border border-white/10 bg-slate-950/95 p-5 shadow-2xl backdrop-blur-xl lg:hidden"
-          >
-            <div className="flex flex-col gap-4">
-              {navLinks.map((link) => (
+        {/* Mobile Navigation */}
+        {menuOpen && (
+          <div className="mt-4 border-t border-white/10 pt-4 md:hidden">
+            <div className="flex flex-col gap-2">
+              {navItems.map((item) => (
                 <a
-                  key={link.name}
-                  href={link.href}
-                  onClick={() => setIsOpen(false)}
-                  className="text-sm font-medium text-slate-300 transition hover:text-white"
+                  key={item.name}
+                  href={item.href}
+                  onClick={() => setMenuOpen(false)}
+                  className="rounded-lg px-3 py-3 text-gray-300 transition hover:bg-white/5 hover:text-blue-400"
                 >
-                  {link.name}
+                  {item.name}
                 </a>
               ))}
-
-              <a
-                href="/resume.pdf"
-                className="mt-2 rounded-xl bg-blue-500 px-4 py-3 text-center text-sm font-semibold text-white"
-              >
-                Download Resume
-              </a>
             </div>
-          </motion.div>
+          </div>
         )}
-      </AnimatePresence>
+      </nav>
     </header>
   );
 }
